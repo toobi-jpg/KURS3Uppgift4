@@ -34,9 +34,9 @@ export default function CoursesData() {
     },
     {
       id: 5,
-      title: "Databases",
-      description: "Learn the fundamentals of databases.",
-      slug: "databases",
+      title: "MongoDB",
+      description: "Learn the fundamentals of MongoDB.",
+      slug: "mongodb",
       details:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi eaque odit quisquam voluptatum itaque fuga dolore illo adipisci similique. Quis, repudiandae. Laboriosam ipsam ratione, consequatur distinctio harum qui ab dolor",
     },
