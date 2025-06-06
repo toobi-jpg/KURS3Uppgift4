@@ -15,10 +15,6 @@ export default function CourseCard({
   let CourseIcon = null;
   let textColor;
 
-  if (title.includes("Advanced")) {
-    textColor = "#ffb0b0";
-  }
-
   if (title.includes("React")) {
     CourseIcon = ReactIcon;
   } else if (title.includes("JavaScript")) {
@@ -30,7 +26,7 @@ export default function CourseCard({
   }
 
   return (
-    <div className="card h-100 bg-dark text-white shadow border-secondary overflow-hidden">
+    <div className="card h-100 bg-dark text-white shadow custom-border rounded-4 overflow-hidden">
       <div className="card-body">
         <h5 className="card-title fw-bold" style={{ marginTop: "0px" }}>
           {keyword}

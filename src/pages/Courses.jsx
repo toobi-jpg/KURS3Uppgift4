@@ -8,8 +8,8 @@ export default function Courses() {
   const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
   const [courseForRegistration, setCourseForRegistration] = useState(null);
 
-  const handleOpenRegisterForm = (courseTitle) => {
-    setCourseForRegistration(courseTitle);
+  const handleOpenRegisterForm = (courseTitle, courseId) => {
+    setCourseForRegistration({ title: courseTitle, id: courseId });
     setIsRegisterFormOpen(true);
   };
 
@@ -20,7 +20,12 @@ export default function Courses() {
 
   return (
     <>
-      <h2>Courses</h2>
+      <h2>
+        Courses
+        <span className="fs-3 text-danger">
+          --**Lägg till registered context för user & Form Validering**
+        </span>
+      </h2>
       <div className="container" style={{ maxWidth: "1000px" }}>
         <div className="row f-4">
           {courses.map((course) => (
@@ -29,7 +34,9 @@ export default function Courses() {
                 title={course.title}
                 description={course.description}
                 to={course.id}
-                onRegisterClick={() => handleOpenRegisterForm(course.title)}
+                onRegisterClick={() =>
+                  handleOpenRegisterForm(course.title, course.id)
+                }
               />
             </div>
           ))}
@@ -37,7 +44,8 @@ export default function Courses() {
         <FormDialog
           open={isRegisterFormOpen}
           onClose={handleCloseRegisterForm}
-          courseTitle={courseForRegistration}
+          courseTitle={courseForRegistration?.title}
+          courseId={courseForRegistration?.id}
         />
       </div>
     </>

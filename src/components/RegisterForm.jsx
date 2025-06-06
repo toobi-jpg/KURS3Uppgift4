@@ -7,6 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useContext } from "react";
+
+let isRegistered = localStorage.getItem("course");
 
 const darkTheme = createTheme({
   palette: {
@@ -14,13 +17,13 @@ const darkTheme = createTheme({
   },
 });
 
-export default function FormDialog({ open, onClose, courseTitle }) {
+export default function FormDialog({ open, onClose, courseTitle, courseId }) {
   return (
     <ThemeProvider theme={darkTheme}>
       <Dialog
         open={open}
         onClose={onClose}
-        PaperProps={{
+        slotProps={{
           paper: {
             component: "form",
             onSubmit: (event) => {
@@ -28,20 +31,20 @@ export default function FormDialog({ open, onClose, courseTitle }) {
               const formData = new FormData(event.currentTarget);
               const formJson = Object.fromEntries(formData.entries());
               const email = formJson.email;
-              console.log(email);
+              localStorage.setItem("user", email);
+              localStorage.setItem("course", courseId);
               onClose();
             },
           },
         }}
       >
-        <DialogTitle className="fs-3">
+        <DialogTitle className="fs-1">
           <span style={{ opacity: "75%" }}>Register for the course - </span>
           {courseTitle}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText className="fs-5">
-            To register to this course, please enter your email address here. We
-            will send updates occasionally.
+          <DialogContentText className="fs-5 mb-3">
+            To register to this course, please enter the required fields.
           </DialogContentText>
           <TextField
             autoFocus
@@ -71,7 +74,7 @@ export default function FormDialog({ open, onClose, courseTitle }) {
             Cancel
           </Button>
           <Button type="submit" size="large" variant="contained">
-            Subscribe
+            Register
           </Button>
         </DialogActions>
       </Dialog>
