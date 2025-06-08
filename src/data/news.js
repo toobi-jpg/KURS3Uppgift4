@@ -1,10 +1,31 @@
-export default async function NewsData() {
-  const response = await fetch("https://dummyjson.com/posts?limit=10");
-  if (!response.ok) {
-    throw new Error("Failed to fetch dummyjson posts");
-  }
+import { useState, useEffect } from "react";
 
-  const data = await response.json();
+export default function useNewsData(page = 1, limit = 5) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  return data;
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        setLoading(true);
+        const skip = (page - 1) * limit;
+        const response = await fetch(
+          `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const posts = await response.json();
+        setData(posts);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    }
+    fetchNews();
+  }, [page, limit]);
+
+  return { data, loading, error };
 }
