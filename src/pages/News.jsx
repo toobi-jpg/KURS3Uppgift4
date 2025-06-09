@@ -15,12 +15,19 @@ const Item = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "10px",
+  boxShadow: "4px 4px 8px #00000055",
 }));
 
 export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [inputValue, setInputValue] = useState("");
+  const [searchWord, setSearchWord] = useState("");
   const postsPerPage = 5;
-  const { data, loading, error } = useNewsData(currentPage, postsPerPage);
+  const { data, loading, error } = useNewsData(
+    currentPage,
+    postsPerPage,
+    searchWord
+  );
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -31,6 +38,22 @@ export default function News() {
     setCurrentPage(page);
   };
 
+  const handleSearchChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSearchsubmit = () => {
+    setSearchWord(inputValue);
+    setCurrentPage(1);
+  };
+
+  const handleEnter = (event) => {
+    if (event.key === "Enter") {
+      console.log("Enter pressed");
+      handleSearchsubmit();
+    }
+  };
+
   return (
     <>
       <div
@@ -38,9 +61,30 @@ export default function News() {
         style={{ width: "800px" }}
       >
         <h1 className="mb-0">News</h1>
+
+        <h4 className="text-danger">**Gör posts en komponent**</h4>
+
         <Box sx={{ display: "flex", alignItems: "flex-end" }} className="mb-2">
-          <SearchIcon sx={{ mr: 1, my: 0.5 }} />
-          <TextField id="input-with-sx" label="Search" variant="standard" />
+          <SearchIcon sx={{ mr: 1, my: 0.5, fontSize: "2rem" }} />
+          <TextField
+            id="input-with-sx"
+            label="Search"
+            variant="standard"
+            value={inputValue}
+            onChange={handleSearchChange}
+            onKeyDown={handleEnter}
+            fullWidth
+            sx={{
+              width: "200px",
+              "& .MuiInput-input": {
+                fontSize: "1.5rem",
+              },
+              "& label": {
+                fontSize: "1.4rem",
+              },
+              "& .MuiInputLabel-shrink": {},
+            }}
+          />
         </Box>
       </div>
       <div style={{ maxHeight: "70vh", maxWidth: "800px" }}>

@@ -20,12 +20,10 @@ export default function Courses() {
 
   return (
     <>
-      <h2>
-        Courses
-        <span className="fs-3 text-danger">
-          --**Lägg till registered context för user & Form Validering**
-        </span>
-      </h2>
+      <h2>Courses</h2>
+      <h4 className="text-danger">
+        **Lägg till registered context för user & Form Validering**
+      </h4>
       <div className="container" style={{ maxWidth: "1000px" }}>
         <div className="row f-4">
           {courses.map((course) => (

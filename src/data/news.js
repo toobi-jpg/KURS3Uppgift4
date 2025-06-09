@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useNewsData(page = 1, limit = 5) {
+export default function useNewsData(page = 1, limit = 5, search = "") {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,9 +10,13 @@ export default function useNewsData(page = 1, limit = 5) {
       try {
         setLoading(true);
         const skip = (page - 1) * limit;
-        const response = await fetch(
-          `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
-        );
+        let url;
+        if (search) {
+          url = `https://dummyjson.com/posts/search?q=${search}`;
+        } else {
+          url = `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`;
+        }
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -25,7 +29,7 @@ export default function useNewsData(page = 1, limit = 5) {
       }
     }
     fetchNews();
-  }, [page, limit]);
+  }, [page, limit, search]);
 
   return { data, loading, error };
 }
