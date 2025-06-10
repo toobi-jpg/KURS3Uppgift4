@@ -13,7 +13,7 @@ export default function CourseDetails() {
     <>
       <Link
         className="btn btn-secondary position-absolute"
-        style={{ top: "100px", left: "50px" }}
+        style={{ top: "100px", left: "10%" }}
         to={"/courses"}
       >
         Back

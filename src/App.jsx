@@ -18,6 +18,7 @@ function App() {
         <CourseProvider>
           <div className="content-area">
             <Navbar />
+
             <Outlet />
           </div>
         </CourseProvider>

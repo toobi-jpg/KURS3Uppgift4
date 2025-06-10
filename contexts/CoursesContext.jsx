@@ -1,27 +1,34 @@
 import { createContext, useContext, useState } from "react";
 
-// 1. Create the context
 const courseContext = createContext();
 
 export default function CourseProvider({ children }) {
-  // 2. Initialize state FROM localStorage
   const [registeredCourses, setRegisteredCourses] = useState(() => {
     const saved = localStorage.getItem("courses") || "";
-    return saved ? saved.split(",") : [];
+    return saved ? saved.split(",").map(Number) : [];
   });
 
-  // 3. Function to add a course
   const registerForCourse = (courseId) => {
-    // Update React state
+    if (registeredCourses.includes(courseId)) {
+      console.log("Already registered for this course.");
+      return;
+    }
+
     const updatedCourses = [...registeredCourses, courseId];
     setRegisteredCourses(updatedCourses);
-
-    // Save to localStorage
     localStorage.setItem("courses", updatedCourses.join(","));
   };
 
+  const unRegisterCourse = (courseId) => {
+    const newArr = registeredCourses.filter((id) => id != courseId);
+    setRegisteredCourses(newArr);
+    localStorage.setItem("courses", newArr.join(","));
+  };
+
   return (
-    <courseContext.Provider value={{ registeredCourses, registerForCourse }}>
+    <courseContext.Provider
+      value={{ registeredCourses, registerForCourse, unRegisterCourse }}
+    >
       {children}
     </courseContext.Provider>
   );

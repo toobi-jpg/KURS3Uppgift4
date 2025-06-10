@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <nav
-      className="navbar sticky-top navbar-dark bg-dark justify-content-around w-100 custom-shadow1"
+      className="navbar sticky-top navbar-dark customNavStyle justify-content-around w-100 custom-shadow1 mt-4 rounded-4"
       style={{
         position: "absolute",
-        maxWidth: "1300px",
+        maxWidth: "800px",
       }}
     >
       <Link className="nav-link" to="home">

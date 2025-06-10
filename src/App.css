@@ -18,8 +18,8 @@ body {
 }
 
 .card:hover {
-  transform: scale(103%);
-  transition: 0.2s ease-in-out;
+  transform: scale(102%);
+  transition: 0.3s ease-in-out;
 }
 
 .custom-border {
@@ -28,4 +28,31 @@ body {
 
 .custom-shadow1 {
   box-shadow: 2px 2px 6px #00000055;
+}
+
+.customCardGradient {
+  background: linear-gradient(to right, #1f242b, #15181c);
+}
+
+.customNavStyle {
+  background: linear-gradient(to right, #1f242b, #15181c, #1f242b);
+  border: 1px solid rgba(255, 255, 255, 0.113);
+}
+
+.custom-text-gradient {
+  background-image: linear-gradient(
+    to top right,
+    transparent,
+    #f8fafc,
+    transparent
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 575px) {
+  .courses {
+    margin-top: 200px;
+  }
 }

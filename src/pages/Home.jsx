@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="">
-      <h1>Hello World</h1>
+    <main>
+      <h1 className="custom-text-gradient fw-bold">F25D KWL - StudentPortal</h1>
     </main>
   );
 }

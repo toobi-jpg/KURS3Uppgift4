@@ -2,11 +2,14 @@ import CourseCard from "../components/CourseCard";
 import CoursesData from "../data/courses";
 import { useState } from "react";
 import FormDialog from "../components/RegisterForm";
+import AlertDialogSlide from "../components/UnRegister";
 
 export default function Courses() {
   const courses = CoursesData();
   const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
   const [courseForRegistration, setCourseForRegistration] = useState(null);
+  const [isUnRegisterOpen, setIsUnRegisterOpen] = useState(false);
+  const [courseForUnRegistration, setCourseForUnRegistration] = useState(null);
 
   const handleOpenRegisterForm = (courseTitle, courseId) => {
     setCourseForRegistration({ title: courseTitle, id: courseId });
@@ -18,22 +21,32 @@ export default function Courses() {
     setCourseForRegistration(null);
   };
 
+  const handleOpenUnRegister = (courseTitle, courseId) => {
+    setCourseForUnRegistration({ title: courseTitle, id: courseId });
+    setIsUnRegisterOpen(true);
+  };
+
+  const handleCloseUnRegister = () => {
+    setIsUnRegisterOpen(false);
+    setCourseForUnRegistration(null);
+  };
+
   return (
     <>
-      <h2>Courses</h2>
-      <h4 className="text-danger">
-        **Lägg till registered context för user & Form Validering**
-      </h4>
-      <div className="container" style={{ maxWidth: "1000px" }}>
+      <h1 className="custom-text-gradient courses">Courses</h1>
+      <div className="container" style={{ maxWidth: "800px" }}>
         <div className="row f-4">
           {courses.map((course) => (
-            <div key={course.id} className="col-12 col-sm-6 col-md-4 p-3">
+            <div key={course.id} className="col-12 col-sm-6 col-md-6 p-3">
               <CourseCard
                 title={course.title}
                 description={course.description}
-                to={course.id}
+                courseId={course.id}
                 onRegisterClick={() =>
                   handleOpenRegisterForm(course.title, course.id)
+                }
+                unRegisterClick={() =>
+                  handleOpenUnRegister(course.title, course.id)
                 }
               />
             </div>
@@ -44,6 +57,12 @@ export default function Courses() {
           onClose={handleCloseRegisterForm}
           courseTitle={courseForRegistration?.title}
           courseId={courseForRegistration?.id}
+        />
+        <AlertDialogSlide
+          open={isUnRegisterOpen}
+          onClose={handleCloseUnRegister}
+          courseTitle={courseForUnRegistration?.title}
+          courseId={courseForUnRegistration?.id}
         />
       </div>
     </>
