@@ -39,9 +39,9 @@ export default function CourseCard({
           <div>
             {CourseIcon && (
               <CourseIcon
-                className="position-absolute end-0 bottom-0 me-4 mb-2"
-                width="10rem"
-                height="10rem"
+                className="position-absolute end-0 bottom-0 me-4 mb-3 courseIcon"
+                width="9rem"
+                height="9rem"
                 style={{ opacity: "25%", filter: "grayscale(25%)" }}
               />
             )}
@@ -59,24 +59,26 @@ export default function CourseCard({
         >
           Read more
         </Link>
-        {isRegistered ? (
-          <Button
-            className="fs-6 py-2 px-3 fw-bold ms-2"
-            variant="outlined"
-            onClick={unRegisterClick}
-            color="error"
-          >
-            Unregister
-          </Button>
-        ) : (
-          <Button
-            className="fs-6 py-2 px-3 fw-bold ms-2"
-            variant="contained"
-            onClick={onRegisterClick}
-          >
-            Resgister
-          </Button>
-        )}
+        {onRegisterClick &&
+          unRegisterClick &&
+          (isRegistered ? (
+            <Button
+              className="fs-6 py-2 px-3 fw-bold ms-2"
+              variant="outlined"
+              onClick={unRegisterClick}
+              color="error"
+            >
+              Unregister
+            </Button>
+          ) : (
+            <Button
+              className="fs-6 py-2 px-3 fw-bold ms-2"
+              variant="contained"
+              onClick={onRegisterClick}
+            >
+              Register
+            </Button>
+          ))}
       </div>
     </div>
   );

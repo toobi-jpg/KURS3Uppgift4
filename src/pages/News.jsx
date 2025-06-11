@@ -1,5 +1,5 @@
 import useNewsData from "../data/news";
-import { Grid, Paper, Pagination, Box, TextField } from "@mui/material";
+import { Grid, Pagination, Box, TextField } from "@mui/material";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import NewsPost from "../components/NewsPost";
