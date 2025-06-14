@@ -20,29 +20,32 @@ export default function Home() {
       <h1 className="custom-text-gradient fw-bold text-center mb-5">
         KWL - StudentPortal
       </h1>
+
       <div className="mb-0">
         <h4 className="text-center custom-text-gradient">Made with</h4>
-        <div className="d-flex flex-row gap-5 justify-content-center align-items-center">
-          <div className="icon-fade">
+        <div className="d-flex flex-row gap-5 justify-content-center align-items-center mt-4">
+          <div className="customCardGradient p-3 custom-border rounded">
             <img
               src={viteLogo}
-              style={{ width: "6rem", height: "6rem" }}
+              style={{ width: "4rem", height: "4rem" }}
               alt="Vite Logo"
             />
           </div>
-          <div className="icon-fade">
+          <div className="customCardGradient p-3 custom-border rounded">
             <img
               src={reactLogo}
-              style={{ width: "6rem", height: "6rem" }}
+              style={{ width: "4rem", height: "4rem" }}
               alt="React Logo"
             />
           </div>
-          <div className="icon-fade">
-            <BootstrapIcon width="7rem" height="7rem" />
+          <div className="customCardGradient p-2 custom-border rounded">
+            <BootstrapIcon width="5rem" height="5rem" />
           </div>
         </div>
       </div>
+
       <div style={{ height: "100px" }}></div>
+
       {hasRegisteredCourses ? (
         <>
           <h4 className="mb-0">Registered courses:</h4>

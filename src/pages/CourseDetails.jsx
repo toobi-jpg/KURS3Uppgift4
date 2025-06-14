@@ -10,21 +10,20 @@ export default function CourseDetails() {
   );
 
   return (
-    <>
-      <Link
-        className="btn btn-secondary position-absolute"
-        style={{ top: "100px", left: "10%" }}
-        to={"/courses"}
-      >
-        Back
-      </Link>
+    <div className="d-flex flex-column w-100" style={{ maxWidth: "800px" }}>
       <div className="text-center d-flex flex-column justify-content-center align-items-center">
         <h2>
           {course.title}
           <span className="text-secondary"> - Course Details</span>
         </h2>
-        <p className="w-50">{course.details}</p>
+        <p className="col-12 col-md-9">{course.details}</p>
       </div>
-    </>
+      <Link
+        className="btn btn-secondary align-self-center mt-5"
+        to={"/courses"}
+      >
+        Back
+      </Link>
+    </div>
   );
 }
