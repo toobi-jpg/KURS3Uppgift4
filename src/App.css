@@ -47,6 +47,18 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.113);
 }
 
+.logo-hover {
+  transition: 0.1s ease-in-out;
+}
+
+.logo-hover:hover {
+  transform: scale(120%);
+}
+
+.logo-hover:hover .logo-hover:first-child {
+  transform: scale(80%);
+}
+
 .custom-text-gradient {
   background-image: linear-gradient(
     to top right,
