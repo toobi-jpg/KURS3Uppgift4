@@ -7,10 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useCourses } from "../../contexts/CoursesContext";
-import { useContext, useState } from "react";
-
-// const registeredCourses = localStorage.getItem("courses") || "";
-// const coursesArr = registeredCourses ? registeredCourses.split(",") : [];
+import { useState } from "react";
 
 const darkTheme = createTheme({
   palette: {
@@ -19,27 +16,84 @@ const darkTheme = createTheme({
 });
 
 export default function FormDialog({ open, onClose, courseTitle, courseId }) {
-  const [inputField, setInputField] = useState("");
+  const [nameField, setNameField] = useState("");
+  const [emailField, setEmailField] = useState("");
+  const [isErrorName, setIsErrorName] = useState(false);
+  const [helperTextName, setHelperTextName] = useState("");
+  const [isErrorEmail, setIsErrorEmail] = useState(false);
+  const [helperTextEmail, setHelperTextEmail] = useState("");
 
   const { registerForCourse, registeredCourses } = useCourses();
 
-  const handleInput = (event) => {
-    setInputField(event.target.value);
+  // Material ui's dialog form verkar ha en inbyggd validering redan för email men ej för full name validering, jag lägger till båda endå
+  // Samt real-time feedback
+
+  const handleInputName = (event) => {
+    setNameField(event.target.value);
+    setIsErrorName(false);
+    setHelperTextName("");
+  };
+
+  const handleInputEmail = (event) => {
+    setEmailField(event.target.value);
+    setIsErrorEmail(false);
+    setHelperTextEmail("");
+  };
+
+  const validateEmail = () => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(emailField);
+  };
+
+  const validateName = () => {
+    const namePattern = /^[a-zA-Z'-]+(\s[a-zA-Z'-]+)+$/;
+    return namePattern.test(nameField);
+  };
+
+  const validateForm = () => {
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+
+    if (!isNameValid) {
+      setIsErrorName(true);
+      setHelperTextName("Please enter first & last name.");
+    }
+
+    if (!isEmailValid) {
+      setIsErrorEmail(true);
+      setHelperTextEmail("Please enter valid email.");
+    }
+
+    return isNameValid && isEmailValid ? true : false;
+  };
+
+  const handleClose = () => {
+    setIsErrorName(false);
+    setHelperTextName("");
+    setIsErrorEmail(false);
+    setHelperTextEmail("");
+
+    onClose();
   };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         slotProps={{
           paper: {
             component: "form",
+            noValidate: true,
             onSubmit: (event) => {
               event.preventDefault();
-              registerForCourse(courseId);
 
-              onClose();
+              if (validateForm()) {
+                registerForCourse(courseId);
+                onClose();
+              } else {
+                return;
+              }
             },
           },
         }}
@@ -55,6 +109,8 @@ export default function FormDialog({ open, onClose, courseTitle, courseId }) {
           <TextField
             autoFocus
             required
+            error={isErrorName}
+            helperText={helperTextName}
             margin="dense"
             id="name"
             name="name"
@@ -62,11 +118,13 @@ export default function FormDialog({ open, onClose, courseTitle, courseId }) {
             type="text"
             fullWidth
             variant="outlined"
-            onChange={handleInput}
+            onChange={handleInputName}
           />
           <TextField
             autoFocus
             required
+            error={isErrorEmail}
+            helperText={helperTextEmail}
             margin="dense"
             id="email"
             name="email"
@@ -74,11 +132,11 @@ export default function FormDialog({ open, onClose, courseTitle, courseId }) {
             type="email"
             fullWidth
             variant="outlined"
-            onChange={handleInput}
+            onChange={handleInputEmail}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} size="large" variant="outlined">
+          <Button onClick={handleClose} size="large" variant="outlined">
             Cancel
           </Button>
           <Button type="submit" size="large" variant="contained">
